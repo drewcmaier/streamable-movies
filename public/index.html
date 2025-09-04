@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Streamable Movies</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <h1>Streamable Movies</h1>
+    <form id="upload-form">
+        <input type="file" name="watchlist" accept=".csv" required />
+        <div>
+            <label><input type="checkbox" name="services" value="HBO Max" checked /> HBO Max</label>
+            <label><input type="checkbox" name="services" value="Hulu" checked /> Hulu</label>
+            <label><input type="checkbox" name="services" value="Amazon Prime Video" checked /> Amazon Prime</label>
+            <label><input type="checkbox" name="services" value="Disney Plus" checked /> Disney+</label>
+            <label><input type="checkbox" name="services" value="Tubi TV" checked /> Tubi</label>
+            <label><input type="checkbox" name="services" value="Pluto TV" checked /> Pluto TV</label>
+            <label><input type="checkbox" name="services" value="Netflix" checked /> Netflix</label>
+        </div>
+        <button type="submit">Search</button>
+    </form>
+    <div id="results"></div>
+    <script src="app.js"></script>
+</body>
+
+</html>
