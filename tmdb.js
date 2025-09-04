@@ -12,7 +12,7 @@ const SERVICE_MAP = {
     "Netflix Standard with Ads": 1796,
 };
 
-export async function getStreamingServices(titles, services) {
+export async function getStreamingServices(titles) {
     const results = [];
 
     const token = process.env.TMDB_API_TOKEN;
@@ -38,9 +38,6 @@ export async function getStreamingServices(titles, services) {
         const providersRes = await fetch(providersUrl, fetchOptions).then((r) => r.json());
         const usProviders = providersRes.results?.US?.flatrate || [];
         const available = usProviders
-            .filter((prov) =>
-                services.some((svc) => SERVICE_MAP[svc] === prov.provider_id)
-            )
             .map((prov) => prov.provider_name);
 
         if (available.length > 0) {

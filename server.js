@@ -24,8 +24,8 @@ app.post("/upload", upload.single("watchlist"), async (req, res) => {
 });
 
 app.post("/streaming", async (req, res) => {
-    const { titles, services } = req.body;
-    const results = await getStreamingServices(titles, services);
+    const { titles } = req.body;
+    const results = await getStreamingServices(titles);
     res.json(results);
 });
 
