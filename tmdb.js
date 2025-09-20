@@ -40,9 +40,7 @@ export async function getStreamingServices(titles) {
         const available = usProviders
             .map((prov) => prov.provider_name);
 
-        if (available.length > 0) {
-            results.push({ title, streaming: available });
-        }
+        results.push({ title, streaming: available });
     }
     return results.sort((a, b) => {
         const primary = a.streaming.join(",").localeCompare(b.streaming.join(","));

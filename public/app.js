@@ -1,6 +1,6 @@
 const form = document.getElementById("upload-form");
 const resultsDiv = document.getElementById("results");
-let allMovies = []; // Store all results
+let allTitles = []; // Store all results
 
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -23,7 +23,7 @@ form.addEventListener("submit", async (e) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ titles }),
     });
-    allMovies = await streamRes.json();
+    allTitles = await streamRes.json();
 
     renderResults();
 });
@@ -33,19 +33,34 @@ form.querySelectorAll('input[name="services"]').forEach(cb => {
     cb.addEventListener("change", renderResults);
 });
 
+function isAvailableOnCheckedServices(streaming, checkedServices) {
+    return streaming.some(service => checkedServices.some(cs => service.includes(cs)));
+}
+
+function filterByCheckedServices(streaming, checkedServices) {
+    return streaming.filter(service => checkedServices.some(cs => service.includes(cs)));
+}
+
 function renderResults() {
     const checkedServices = Array.from(
         form.querySelectorAll('input[name="services"]:checked')
     ).map((el) => el.value);
 
     let html = `<table><tr><th>Title</th><th>Streaming Services</th></tr>`;
-    for (const movie of allMovies) {
+
+    const sortedByAvailability = [...allTitles].sort((a, b) => {
+        const aAvailable = isAvailableOnCheckedServices(a.streaming, checkedServices) ? 1 : 0;
+        const bAvailable = isAvailableOnCheckedServices(b.streaming, checkedServices) ? 1 : 0;
+        // Sort available first (descending), then by title
+        return bAvailable - aAvailable || a.title.localeCompare(b.title);
+    });
+
+    for (const movie of sortedByAvailability) {
         // Filter streaming services by checked boxes
-        const filtered = movie.streaming.filter(s => checkedServices.includes(s));
-        if (filtered.length > 0) {
-            html += `<tr><td>${movie.title}</td><td>${filtered.join(", ")}</td></tr>`;
-        }
+        const filtered = filterByCheckedServices(movie.streaming, checkedServices);
+        html += `<tr class="${filtered.length > 0 ? '' : 'unavailable'}"><td>${movie.title}</td><td>${filtered.join(", ")}</td></tr>`;
     }
+
     html += `</table>`;
     resultsDiv.innerHTML = html;
 }

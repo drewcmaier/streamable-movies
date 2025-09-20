@@ -92,6 +92,11 @@ tr:hover td {
     background: #e0e7ef;
 }
 
+tr.unavailable td {
+    color: #9ca3af;
+    font-style: italic;
+}
+
 @media (max-width: 600px) {
     .container {
         padding: 1rem;
