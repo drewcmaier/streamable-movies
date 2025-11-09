@@ -114,3 +114,38 @@ tr.unavailable td {
         gap: 1rem;
     }
 }
+
+/* Loading / spinner styles */
+#loading {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 3px solid rgba(59, 130, 246, 0.15);
+    border-top-color: #3b82f6;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-text {
+    font-size: 0.95rem;
+}
+
+.error {
+    padding: 1rem;
+    color: #b91c1c;
+    background: #fff5f5;
+    border: 1px solid #fecaca;
+    border-radius: 6px;
+}
